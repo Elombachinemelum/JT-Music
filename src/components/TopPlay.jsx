@@ -8,18 +8,17 @@ import { playPause, setActiveSong } from "../redux/features/playerSlice";
 import { useGetTopChartsQuery } from "../redux/services/shazamCoreApi";
 import "swiper/css";
 import "swiper/css/free-mode";
+import Controls from "./MusicPlayer/Controls";
 
 const TopChartCard = ({
   song,
   indx,
+  data,
   isPlaying,
   activeSong,
   handlePauseClick,
-  handlePlayClick,
 }) => {
-  useEffect(() => {
-    console.log({ song, indx });
-  }, []);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -49,7 +48,10 @@ const TopChartCard = ({
           isPlaying,
           activeSong,
           handlePause: handlePauseClick,
-          handlePlay: () => handlePlayClick(song, indx),
+          handlePlay: () => {
+            dispatch(setActiveSong({ song, data, indx }));
+            dispatch(playPause(true));
+          },
         }}
       />
     </div>
@@ -73,14 +75,6 @@ const TopPlay = () => {
     dispatch(playPause(false));
   };
 
-  const handlePlayClick = ({ song, indx }) => {
-    console.log("this was called");
-    console.log({ song, indx, data });
-
-    dispatch(setActiveSong({ song, data, indx }));
-    dispatch(playPause(true));
-  };
-
   return (
     <div
       ref={divRef}
@@ -100,10 +94,10 @@ const TopPlay = () => {
               {...{
                 song,
                 indx,
+                data,
                 isPlaying,
                 activeSong,
                 handlePauseClick,
-                handlePlayClick,
                 key: song.key,
               }}
             />
