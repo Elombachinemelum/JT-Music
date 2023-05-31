@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { useEffect } from "react";
 
 const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
   const fallBack =
@@ -16,6 +17,10 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
+
+  useEffect(() => {
+    console.log({ song, from: "song card" });
+  }, [song]);
 
   return (
     <div
@@ -48,11 +53,15 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
       {/* title and artiste */}
       <div className="mt-4 flex flex-col">
         <p className="font-semibold text-lg text-white truncate">
-          <Link to="/">{song?.title}</Link>
+          <Link to={`/songs/${song?.key}`}>{song?.title}</Link>
         </p>
         <span className="text-sm text-gray-100 opacity-50">By</span>
         <p className="text-gray-300 mt-1 text-sm truncate">
-          <Link to="/">{song?.subtitle}</Link>
+          <Link
+            to={`/artists/${song?.artists?.[0]?.alias}/${song?.artists?.[0]?.adamid}`}
+          >
+            {song?.subtitle}
+          </Link>
         </p>
       </div>
     </div>
