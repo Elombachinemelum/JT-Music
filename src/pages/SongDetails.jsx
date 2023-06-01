@@ -11,7 +11,6 @@ const SongDetails = () => {
   const dispatch = useDispatch();
   const { songid } = useParams();
   const { isPlaying, activeSong } = useSelector((state) => state.player);
-  console.log({ songid });
 
   const { data: songData, isFetching: fetchingSongData } =
     useGetSongDetailsQuery({ songid });
@@ -21,10 +20,6 @@ const SongDetails = () => {
     isFetching: fetchingRelatedSongs,
     error,
   } = useGetRelatedSongsQuery({ songid });
-
-  useEffect(() => {
-    console.log({ songData });
-  }, [songData]);
 
   if (fetchingSongData || fetchingRelatedSongs)
     return <Loader title="Loading Song Details..." />;

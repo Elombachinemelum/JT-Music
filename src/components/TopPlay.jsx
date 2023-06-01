@@ -19,7 +19,6 @@ const TopChartCard = ({
   handlePauseClick,
 }) => {
   const dispatch = useDispatch();
-  useEffect(() => console.log({ song, from: "Top Charts" }), []);
 
   return (
     <div

@@ -8,17 +8,12 @@ const ArtistDetails = () => {
   const dispatch = useDispatch();
   const { name, id: artistId } = useParams();
   const { isPlaying, activeSong } = useSelector((state) => state.player);
-  console.log({ artistId, name });
 
   const {
     data: artistData,
     isFetching: fetchingArtistData,
     error,
   } = useGetArtistDetailsQuery({ name, artistId });
-
-  useEffect(() => {
-    console.log({ artistData });
-  }, [artistData]);
 
   if (fetchingArtistData) return <Loader title="Loading Artist Details..." />;
 

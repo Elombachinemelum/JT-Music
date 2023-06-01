@@ -18,10 +18,6 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
     dispatch(playPause(true));
   };
 
-  useEffect(() => {
-    console.log({ song, from: "song card" });
-  }, [song]);
-
   return (
     <div
       className="flex flex-col w-[250px] p-4 

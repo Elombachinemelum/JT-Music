@@ -17,7 +17,6 @@ const AroundYou = () => {
     axios
       .get(`https://geo.ipify.org/api/v2/country?apiKey=${key}`)
       .then((response) => {
-        console.log({ response });
         setCountry(response?.data?.location.country);
       })
       .catch((err) => console.error(err.message || err))
