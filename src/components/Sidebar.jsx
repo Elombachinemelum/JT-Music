@@ -53,7 +53,7 @@ const Sidebar = () => {
            mobileMenuOpen ? " left-0" : " -left-full"
          }`}
       >
-        <img src={logo} alt="Logo" className="w-full h-14 object-contain" />
+        <img src={logo_new} alt="Logo" className="w-full h-14 object-contain" />
         <NavLinks handleClick={() => setMobileMenuOpen(false)} />
       </div>
     </>
