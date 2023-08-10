@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { logo } from "../assets";
+import { logo, logo_new } from "../assets";
 import { RiCloseLine } from "react-icons/ri";
 import { HiOutlineMenu } from "react-icons/hi";
 import { links } from "../assets/constants";
@@ -28,7 +28,7 @@ const Sidebar = () => {
   return (
     <>
       <div className="md:flex flex-col hidden w-[240px] py-10 px-4 bg-[#191624]">
-        <img src={logo} alt="Logo" className="w-full h-14 object-contain" />
+        <img src={logo_new} alt="Logo" className="w-full h-14 object-contain" />
         <NavLinks />
       </div>
 
