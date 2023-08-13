@@ -9,6 +9,8 @@ import { useGetTopChartsQuery } from "../redux/services/shazamCoreApi";
 import "swiper/css";
 import "swiper/css/free-mode";
 import Controls from "./MusicPlayer/Controls";
+import { StyledTopChartCard } from "./styled/StyledTopPlay";
+import { retry } from "@reduxjs/toolkit/dist/query";
 
 const TopChartCard = ({
   song,
@@ -19,44 +21,70 @@ const TopChartCard = ({
   handlePauseClick,
 }) => {
   const dispatch = useDispatch();
+  const [breakWord, setBreakWord] = useState(false);
+
+  window.addEventListener("resize", (evt) => {
+    let viewPort = evt.target.innerWidth;
+    const isMobile = viewPort < 460;
+    if (isMobile) {
+      return setBreakWord(true);
+    }
+    setBreakWord(false);
+  });
+
+  useEffect(() => {
+    if (window.innerWidth < 460) {
+      setBreakWord(true);
+    } else setBreakWord(false);
+  }, []);
 
   return (
-    <div
-      className="w-full flex flex-row items-center hover:bg-[#4c426e]
-   py-2 p-4 rounded-lg cursor-pointer mb-2"
-    >
-      <h3 className="font-bold text-base text-white mr-3">{indx + 1}.</h3>
-      <div className="flex flex-1 flex-row justify-between items-center">
-        <img
-          src={song?.images?.coverart || fallBack}
-          alt={song?.title}
-          className="w-20 h-20 rounded-lg"
-        />
-        <div className="flex flex-1 flex-col justify-center mx-3">
-          <Link to={`/songs/${song?.key}`}>
-            <p className="text-xl font-bold text-white">{song?.title}</p>
-          </Link>
-          <Link
-            to={`/artists/${song?.artists[0]?.alias}/${song?.artists[0]?.adamid}`}
-          >
-            <p className="text-base text-gray-300 mt-1">{song?.subtitle}</p>
-          </Link>
+    <StyledTopChartCard>
+      <div
+        className="w-full flex flex-row items-center hover:bg-[#4c426e]
+   py-2 p-4 rounded-lg cursor-pointer mb-2 container-mk"
+      >
+        <h3 className="font-bold text-base text-white mr-3">{indx + 1}.</h3>
+        <div className="flex flex-1 flex-row justify-between items-center">
+          <img
+            src={song?.images?.coverart || fallBack}
+            alt={song?.title}
+            className="w-20 h-20 rounded-lg"
+          />
+          <div className="flex flex-1 flex-col justify-center mx-3">
+            <Link to={`/songs/${song?.key}`}>
+              <p className="text-xl font-bold text-white top-chart-title">
+                {breakWord
+                  ? song?.title.length > 20
+                    ? `${song?.title.slice(0, 20)}...`
+                    : song?.title
+                  : song?.title}
+              </p>
+            </Link>
+            <Link
+              to={`/artists/${song?.artists[0]?.alias}/${song?.artists[0]?.adamid}`}
+            >
+              <p className="text-base text-gray-300 mt-1 top-chart-subtitle">
+                {song?.subtitle}
+              </p>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      <PlayPause
-        {...{
-          song,
-          isPlaying,
-          activeSong,
-          handlePause: handlePauseClick,
-          handlePlay: () => {
-            dispatch(setActiveSong({ song, data, indx }));
-            dispatch(playPause(true));
-          },
-        }}
-      />
-    </div>
+        <PlayPause
+          {...{
+            song,
+            isPlaying,
+            activeSong,
+            handlePause: handlePauseClick,
+            handlePlay: () => {
+              dispatch(setActiveSong({ song, data, indx }));
+              dispatch(playPause(true));
+            },
+          }}
+        />
+      </div>
+    </StyledTopChartCard>
   );
 };
 
